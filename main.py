@@ -3,6 +3,7 @@ from collections import defaultdict
 import csv
 import streamlit as st
 import pandas as pd
+import io
 
 # Streamlit UI
 st.title("Πρόγραμμα Βαρδιών με Προτιμήσεις και Απουσίες")
@@ -62,7 +63,7 @@ if uploaded_file:
                 e != easter_owner and
                 week not in absences.get(e, []) and
                 e not in recent_employees and
-                week_history[e].count(month) < 2  # Avoid repeating same season
+                week_history[e].count(month) < 2
             )]
 
             preferred = [e for e in eligible_employees if week in preferences.get(e, [])]
@@ -96,6 +97,9 @@ if uploaded_file:
 
     df_output = pd.DataFrame(output)
     st.write("## Τελικό Πρόγραμμα:", df_output)
-    st.download_button("Λήψη Προγράμματος σε Excel", df_output.to_excel(index=False), file_name="προγραμμα.xlsx")
+
+    excel_buffer = io.BytesIO()
+    df_output.to_excel(excel_buffer, index=False)
+    st.download_button("Λήψη Προγράμματος σε Excel", data=excel_buffer.getvalue(), file_name="προγραμμα.xlsx")
 else:
     st.info("Παρακαλώ ανεβάστε αρχείο CSV με τις στήλες: Όνομα, Εβδομάδα, Κατάσταση.")
