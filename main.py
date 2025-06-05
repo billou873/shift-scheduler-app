@@ -13,7 +13,7 @@ if uploaded_file:
     df_input = pd.read_csv(uploaded_file)
     st.write("## Εισαγόμενα Δεδομένα:", df_input)
 
-    employees = ["Αννα", "Βασίλης", "Γιάννης", "Δήμητρα", "Ελένη", "Ζήσης", "Ηλίας", "Θανάσης"]
+    employees = ["Vasilis", "Kwstas", "Andreas", "Christos", "Spyros", "Thodwris", "NikosA", "NikosK"]
     start_date = datetime.date(2025, 1, 3)
 
     holidays = [
